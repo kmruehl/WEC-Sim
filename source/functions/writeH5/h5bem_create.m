@@ -1,4 +1,4 @@
-function h5bem_create(filename, numBodies, numFreq, numWaveDir, bodyNames, scaled)
+function h5bem_create(filename, numBodies, numFreq, numWaveDir, bodyNames, scaled, irf, ss)
 	% Function to create a WEC-Sim/BEMIO-formatted h5 file and populate the string datasets
 	%
 	% inputs:
@@ -8,6 +8,8 @@ function h5bem_create(filename, numBodies, numFreq, numWaveDir, bodyNames, scale
 	% 	numWaveDir:     scalar number of wave directions
 	% 	bodyNames:      cell containing strings of body names
 	% 	scaled:         string 'false' or 'true'
+	% 	irf:            scalar number of time steps in the IRF
+	% 	ss:             scalar maximum order of the SS realization
 	%
 	% outputs:
 	%	new h5 file with the WEC-Sim/BEMIO format and with string datasets populated
@@ -60,7 +62,9 @@ function h5bem_create(filename, numBodies, numFreq, numWaveDir, bodyNames, scale
 	h5create(filename,'/simulation_parameters/water_depth',[1])
 	h5create(filename,'/simulation_parameters/w',[numFreq])
 	h5create(filename,'/simulation_parameters/T',[numFreq])
-	
+    h5create(filename,['/simulation_parameters/g'], [1]);
+	h5create(filename,['/simulation_parameters/rho'], [1]);
+
 	% bodies
 	for ii = 1:numBodies
 		% properties
@@ -76,5 +80,12 @@ function h5bem_create(filename, numBodies, numFreq, numWaveDir, bodyNames, scale
 		h5create(filename,['/body' num2str(ii) '/hydro_coeffs/added_mass/all'],[numFreq 6*numBodies 6])
 		h5create(filename,['/body' num2str(ii) '/hydro_coeffs/added_mass/inf_freq'],[6*numBodies 6])
 		h5create(filename,['/body' num2str(ii) '/hydro_coeffs/radiation_damping/all'],[numFreq 6*numBodies 6])
+        h5create(filename, ['/body' num2str(ii) '/hydro_coeffs/radiation_damping/impulse_response_fun/K'],[irf 6*numBodies 6]);
+        h5create(filename, ['/body' num2str(ii) '/hydro_coeffs/radiation_damping/impulse_response_fun/t'],[irf]);
+%         h5create(filename, ['/body' num2str(ii) '/hydro_coeffs/radiation_damping/state_space/it'], [6*numBodies 6]);
+%         h5create(filename, ['/body' num2str(ii) '/hydro_coeffs/radiation_damping/state_space/A/all'],[ss 6*numBodies 6] );
+%         h5create(filename, ['/body' num2str(ii) '/hydro_coeffs/radiation_damping/state_space/B/all'], [ss 6*numBodies 6]);
+%         h5create(filename, ['/body' num2str(ii) '/hydro_coeffs/radiation_damping/state_space/C/all'], [ss 6*numBodies 6]);
+%         h5create(filename, ['/body' num2str(ii) '/hydro_coeffs/radiation_damping/state_space/D/all'],[ss 6*numBodies 6] );
 	end
 end

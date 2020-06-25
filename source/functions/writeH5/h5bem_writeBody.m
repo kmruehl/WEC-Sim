@@ -1,5 +1,8 @@
-function h5bem_writeBody(filename, body_number, cb, cg, disp_vol, K, re, im, added_mass, added_mass_inf, radiation_damping)
-	% Function to write a body's properties and coefficients to an existing WEC-Sim/BEMIO-formatted h5 file
+function h5bem_writeBody(filename, body_number, cb, cg, disp_vol, K, re, im, added_mass, added_mass_inf, radiation_damping, ...
+    radiation_damping_irf_K, radiation_damping_irf_t,radiation_damping_state_space_it,radiation_damping_state_space_A, ...
+    radiation_damping_state_space_B, radiation_damping_state_space_C, radiation_damping_state_space_D)
+	
+% Function to write a body's properties and coefficients to an existing WEC-Sim/BEMIO-formatted h5 file
 	%
 	% inputs:
 	% 	filename:               string name of file to modify 
@@ -30,4 +33,12 @@ function h5bem_writeBody(filename, body_number, cb, cg, disp_vol, K, re, im, add
 	h5write(filename, ['/body' num2str(body_number) '/hydro_coeffs/excitation/im'], permute(im,[3 2 1]));
 	h5write(filename, ['/body' num2str(body_number) '/hydro_coeffs/linear_restoring_stiffness'], permute(K,[2 1]));
 	h5write(filename, ['/body' num2str(body_number) '/hydro_coeffs/radiation_damping/all'], permute(radiation_damping,[3 2 1]));
+    % Kelley - check permute
+	h5write(filename, ['/body' num2str(body_number) '/hydro_coeffs/radiation_damping/impulse_response_fun/K'], permute(radiation_damping_irf_K,[3 2 1]));
+	h5write(filename, ['/body' num2str(body_number) '/hydro_coeffs/radiation_damping/impulse_response_fun/t'], radiation_damping_irf_t);
+% 	h5write(filename, ['/body' num2str(body_number) '/hydro_coeffs/radiation_damping/state_space/it'], permute(radiation_damping_state_space_it,[3 2 1]));
+% 	h5write(filename, ['/body' num2str(body_number) '/hydro_coeffs/radiation_damping/state_space/A/all'], permute(radiation_damping_state_space_A,[3 2 1]));
+% 	h5write(filename, ['/body' num2str(body_number) '/hydro_coeffs/radiation_damping/state_space/B/all'], permute(radiation_damping_state_space_B,[3 2 1]));
+% 	h5write(filename, ['/body' num2str(body_number) '/hydro_coeffs/radiation_damping/state_space/C/all'], permute(radiation_damping_state_space_C,[3 2 1]));
+% 	h5write(filename, ['/body' num2str(body_number) '/hydro_coeffs/radiation_damping/state_space/D/all'], permute(radiation_damping_state_space_D,[3 2 1]));
 end
