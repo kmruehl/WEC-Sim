@@ -62,17 +62,17 @@ else
         end
     end
     
-    numConditions=2;
-    if length(waves.phaseSeed)>1
-        numConditions=numConditions+1;
-        mcr.header{numConditions} = 'waves.phaseSeed';
-        len = length(mcr.cases(:,1));
-        for nseed=1:length(waves.phaseSeed)
-            mcr.cases(len*(nseed-1)+1:len*(nseed-1)+len,1:numConditions-1) = mcr.cases(1:len,1:numConditions-1);
-            mcr.cases(len*(nseed-1)+1:len*(nseed-1)+len,    numConditions) = waves.phaseSeed(nseed);
-        end
-    end
-    
+    % numConditions=2;
+    % if length(waves.phaseSeed)>1
+    %     numConditions=numConditions+1;
+    %     mcr.header{numConditions} = 'waves.phaseSeed';
+    %     len = length(mcr.cases(:,1));
+    %     for nseed=1:length(waves.phaseSeed)
+    %         mcr.cases(len*(nseed-1)+1:len*(nseed-1)+len,1:numConditions-1) = mcr.cases(1:len,1:numConditions-1);
+    %         mcr.cases(len*(nseed-1)+1:len*(nseed-1)+len,    numConditions) = waves.phaseSeed(nseed);
+    %     end
+    % end
+
     if exist('pto','var')
         for n=1:size(pto,2)
             if (length(pto(n).damping)>1 || length(pto(n).stiffness)>1)
