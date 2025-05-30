@@ -1,4 +1,4 @@
-classdef cableTensionTest < matlab.unittest.TestCase
+classdef cableTest < matlab.unittest.TestCase
     
     properties
         stiffness = 10; % Cable stiffness
@@ -10,7 +10,7 @@ classdef cableTensionTest < matlab.unittest.TestCase
     end
     
     methods (Access = 'public')
-        function obj = cableTensionTest()
+        function obj = cableTest()
 
         end
     end
